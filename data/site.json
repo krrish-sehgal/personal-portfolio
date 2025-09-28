@@ -1,0 +1,128 @@
+{
+  "hero": {
+    "name": "Krrish Sehgal",
+    "role": "Bitcoin Developer",
+    "tagline": "Ones and Zeroes never disappoint",
+    "primaryCta": {
+      "label": "View CV",
+      "url": "https://drive.google.com/file/d/1eVuA4NnhOicSNwGLd_BXiEps-cdZMa5V/view?usp=drivesdk"
+    },
+    "secondaryCta": { "label": "Hire Me", "url": "mailto:krrishsehgal03@gmail.com" },
+    "animationIntensity": "medium"
+  },
+  "profile": {
+    "location": "Delhi, India",
+    "shortBio": "Engineer focused on Bitcoin protocol and secure systems.",
+    "longBio": "A tech head and curious builder, Krrish got selected for both Google Summer of Code (GSoC) and Summer of Bitcoin (SoB) in his 4th semester of college. He has a passion for open-source and has contributed to various projects, diving deep into technologies like Flutter, Swift, and Bitcoin internals. He is a self-motivated learner who is not afraid to take on challenging tasks.",
+    "skills": [
+      "Bitcoin Core",
+      "Lightning",
+      "Rust",
+      "TypeScript",
+      "Next.js",
+      "Miniscript",
+      "Testing",
+      "Security",
+      "Flutter",
+      "Swift",
+      "Kotlin",
+      "Django",
+      "OpenAI API",
+      "Git"
+    ],
+    "headshot": {
+      "path": "/images/headshot.jpg",
+      "alt": "Headshot of Krrish Sehgal"
+    }
+  },
+  "timeline": [
+    {
+      "title": "Participant",
+      "organization": "Google Summer of Code (GSoC)",
+      "start": "2024",
+      "end": "2024",
+      "summary": "Contributed to an open-source organization as part of the Google Summer of Code program.",
+      "highlights": [
+        "Worked on a call-blocking extension in Flutter for the OWASP BLT app.",
+        "Developed a plagiarism detection mode integrating OpenAI.",
+        "Gained experience with native integration in Swift and Kotlin."
+      ],
+      "links": []
+    },
+    {
+      "title": "Participant",
+      "organization": "Summer of Bitcoin (SoB)",
+      "start": "2024",
+      "end": "2024",
+      "summary": "Worked on a Bitcoin-related project during the Summer of Bitcoin program.",
+      "highlights": [
+        "Learned about Bitcoin transaction formation, SegWit, and multisig wallets.",
+        "Dove deep into low-level transaction logic.",
+        "Contributed to the Caravan project."
+      ],
+      "links": []
+    }
+  ],
+  "projects": [
+    {
+      "title": "SecureFace",
+      "description": "Winning project of Smart India Hackathon PSID-1670.",
+      "tech": ["JavaScript"],
+      "repo": "https://github.com/krrish-sehgal/SecureFace",
+      "live": "",
+      "image": { "path": "", "alt": "" }
+    },
+    {
+      "title": "DeepFakeDetector",
+      "description": "An integrated website and chrome extension to catch deepfakes.",
+      "tech": ["JavaScript"],
+      "repo": "https://github.com/krrish-sehgal/DeepFakeDetector",
+      "live": "",
+      "image": { "path": "", "alt": "" }
+    },
+    {
+      "title": "ffmpeg-server",
+      "description": "",
+      "tech": ["JavaScript"],
+      "repo": "https://github.com/krrish-sehgal/ffmpeg-server",
+      "live": "",
+      "image": { "path": "", "alt": "" }
+    }
+  ],
+  "achievements": [
+    { "label": "Google Summer of Code", "value": "2024" },
+    { "label": "Summer of Bitcoin", "value": "2024" },
+    { "label": "Smart India Hackathon Winner", "value": "" }
+  ],
+  "speaking": [],
+  "writing": [
+    {
+      "title": "How I Cracked Google Summer of Code and Summer of Bitcoin",
+      "platform": "Medium",
+      "date": "2025-05-21",
+      "link": "https://medium.com/@krrishsehgal03/how-i-cracked-google-summer-of-code-and-summer-of-bitcoin-all-in-my-second-year-of-college-aa399093ca14"
+    }
+  ],
+  "testimonials": [],
+  "contact": {
+    "email": "krrishsehgal03@gmail.com",
+    "twitter": "",
+    "github": "https://github.com/krrish-sehgal",
+    "linkedin": "https://www.linkedin.com/in/krrish-sehgal-5a268b24b",
+    "nostrNpub": "",
+    "lightning": "",
+    "lnurl": "",
+    "btcAddress": "",
+    "calendly": "",
+    "extra": []
+  },
+  "seo": {
+    "title": "Krrish Sehgal – Bitcoin Developer",
+    "description": "Bitcoin/Lightning engineer building secure, open financial software.",
+    "ogImage": { "path": "/images/og.jpg", "alt": "Portfolio preview image" }
+  },
+  "theme": {
+    "accent": "orange",
+    "btcSymbols": true
+  }
+}

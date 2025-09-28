@@ -1,0 +1,14 @@
+[
+  {
+    "year": "2025",
+    "role": "Summer of Bitcoin Intern",
+    "company": "Caravan",
+    "description": "Worked on multisig wallet coordination and PSBT improvements."
+  },
+  {
+    "year": "2024",
+    "role": "Contributor",
+    "company": "SeedSigner",
+    "description": "Added support for BC-UR 2.0 animated QR signing flows."
+  }
+]
