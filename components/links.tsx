@@ -66,6 +66,7 @@ export function ImportantLinks() {
   const L = site.contact
   const links = [
     L.github ? { label: "GitHub", href: L.github, Icon: GitHubIcon } : null,
+    L.twitter ? { label: "Twitter", href: L.twitter, Icon: TwitterIcon } : null,
     L.linkedin ? { label: "LinkedIn", href: L.linkedin, Icon: LinkedInIcon } : null,
     L.email ? { label: "Email", href: `mailto:${L.email}`, Icon: MailIcon } : null,
     site.hero?.primaryCta?.url

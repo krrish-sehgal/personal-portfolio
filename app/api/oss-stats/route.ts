@@ -1,5 +1,37 @@
 // Server-only: uses process.env.GITHUB_TOKEN; never exposed to the client.
 
+import { NextResponse } from 'next/server';
+
+// Simple in-memory cache with TTL
+class SimpleCache {
+  private cache = new Map<string, { data: any; expires: number }>();
+
+  get(key: string) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expires) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return item.data;
+  }
+
+  set(key: string, data: any, ttlMs: number = 600000) { // Default 10 minutes for main stats
+    this.cache.set(key, {
+      data,
+      expires: Date.now() + ttlMs
+    });
+  }
+
+  clear() {
+    this.cache.clear();
+  }
+}
+
+const cache = new SimpleCache();
+
 export const dynamic = "force-dynamic"
 
 type CountsByType = Record<"feature" | "bugfix" | "docs" | "infra" | "other", number>
@@ -64,6 +96,18 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const user = searchParams.get("user") || "krrish-sehgal"
 
+  // Check if we have cached data
+  const cacheKey = `oss-stats-${user}`;
+  const cachedData = cache.get(cacheKey);
+  
+  if (cachedData) {
+    return NextResponse.json(cachedData, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1200', // Cache for 10 minutes, serve stale for 20 minutes
+      }
+    });
+  }
+
   // Limit search window to reduce API load, e.g., last 18 months
   const since = new Date()
   since.setUTCMonth(since.getUTCMonth() - 18)
@@ -108,7 +152,7 @@ export async function GET(req: Request) {
 
     for (const it of items) {
       const title = it.title || ""
-      const labels = Array.isArray(it.labels) ? it.labels.map((l) => l.name || "") : []
+      const labels = Array.isArray(it.labels) ? it.labels.map((l: any) => l.name || "") : []
       const type = classifyPR(title, labels)
       countsByType[type] += 1
 
@@ -151,9 +195,13 @@ export async function GET(req: Request) {
       note,
     }
 
-    return new Response(JSON.stringify(payload), {
-      headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-      status: 200,
+    // Cache the data for 10 minutes
+    cache.set(cacheKey, payload, 600000);
+
+    return NextResponse.json(payload, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1200', // Cache for 10 minutes, serve stale for 20 minutes
+      }
     })
   } catch (err: any) {
     const msg = err?.message || "Unknown error"

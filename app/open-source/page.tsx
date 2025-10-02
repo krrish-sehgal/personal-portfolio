@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import OpenSourceDashboard from "@/components/open-source-dashboard"
 import { cn } from "@/lib/utils"
 import BitcoinBackground from "@/components/bitcoin-background"
+import { Navbar } from "@/components/navbar"
 
 export const metadata = {
   title: "Open Source – Bitcoin Contributions",
@@ -12,10 +13,10 @@ export const metadata = {
 export default function OpenSourcePage() {
   return (
     <main className={cn("relative min-h-[100svh] bg-background text-foreground")}>
+      <Navbar showNavLinks={false} />
       {/* Decorative background (respects reduced motion if your component implements it) */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
         {/* If BitcoinBackground exposes props, you can tweak intensity here */}
-        {/* @ts-expect-error Server/Client interop handled by Next.js */}
         <BitcoinBackground />
       </div>
 

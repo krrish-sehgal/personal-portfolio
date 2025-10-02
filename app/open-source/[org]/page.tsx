@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/navbar"
 import { OrganizationProfile } from "@/components/organization-profile"
 
 interface PageProps {
@@ -12,7 +11,6 @@ export default function OrganizationPage({ params }: PageProps) {
 
   return (
     <main>
-      <Navbar />
       <div className="container mx-auto px-4 py-16 md:py-24">
         <OrganizationProfile orgName={orgName} />
       </div>

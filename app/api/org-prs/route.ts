@@ -1,5 +1,37 @@
 // API endpoint to fetch PRs for a specific organization
 
+import { NextResponse } from 'next/server';
+
+// Simple in-memory cache with TTL
+class SimpleCache {
+  private cache = new Map<string, { data: any; expires: number }>();
+
+  get(key: string) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expires) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return item.data;
+  }
+
+  set(key: string, data: any, ttlMs: number = 300000) { // Default 5 minutes
+    this.cache.set(key, {
+      data,
+      expires: Date.now() + ttlMs
+    });
+  }
+
+  clear() {
+    this.cache.clear();
+  }
+}
+
+const cache = new SimpleCache();
+
 export const dynamic = "force-dynamic"
 
 interface PullRequest {
@@ -20,6 +52,12 @@ interface OrgPRsResponse {
   totalPRs: number
   pullRequests: PullRequest[]
   fetchedAt: string
+  pagination: {
+    page: number
+    perPage: number
+    totalPages: number
+    hasMore: boolean
+  }
 }
 
 async function ghFetch(url: string) {
@@ -42,16 +80,28 @@ async function ghFetch(url: string) {
   return res
 }
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const org = searchParams.get("org")
-  const user = searchParams.get("user") || "krrish-sehgal"
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const org = searchParams.get('org');
+  const page = parseInt(searchParams.get('page') || '1');
+  const perPage = 10;
 
   if (!org) {
-    return new Response(JSON.stringify({ error: "Organization parameter is required" }), {
-      headers: { "Content-Type": "application/json" },
-      status: 400,
-    })
+    return NextResponse.json({ error: 'Organization parameter is required' }, { status: 400 });
+  }
+
+  const user = "krrish-sehgal"; // Hardcoded username for this portfolio
+
+  // Check if we have cached data
+  const cacheKey = `org-prs-${org}-${page}`;
+  const cachedData = cache.get(cacheKey);
+  
+  if (cachedData) {
+    return NextResponse.json(cachedData, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600', // Cache for 5 minutes, serve stale for 10 minutes
+      }
+    });
   }
 
   // Limit search window to reduce API load, e.g., last 18 months
@@ -61,14 +111,14 @@ export async function GET(req: Request) {
 
   try {
     // Search for PRs by the user in the specific organization
-    const perPage = 100
-    const maxPages = 2 // up to 200 PRs
-    let page = 1
-    const items: any[] = []
+    const searchPerPage = 100 // GitHub search API per page
+    let searchPage = 1
+    const allItems: any[] = []
 
-    while (page <= maxPages) {
+    // First, get all PRs to determine total count and for pagination
+    while (searchPage <= 10) { // Max of 1000 PRs to avoid rate limits
       const q = encodeURIComponent(`is:pr author:${user} org:${org} created:>=${sinceIso}`)
-      const url = `https://api.github.com/search/issues?q=${q}&per_page=${perPage}&page=${page}&sort=created&order=desc`
+      const url = `https://api.github.com/search/issues?q=${q}&per_page=${searchPerPage}&page=${searchPage}&sort=created&order=desc`
       const res = await ghFetch(url)
       const data = (await res.json()) as {
         items: Array<{
@@ -85,17 +135,17 @@ export async function GET(req: Request) {
         total_count: number
       }
       
-      items.push(...data.items)
+      allItems.push(...data.items)
       
-      // Stop if fewer than perPage returned
-      if (data.items.length < perPage) break
-      page++
+      // Stop if fewer than searchPerPage returned or we have enough for current request
+      if (data.items.length < searchPerPage) break
+      searchPage++
     }
 
-    // Fetch detailed PR information to get draft status
-    const pullRequests: PullRequest[] = []
+    // First, filter out unwanted PRs and get all valid PRs
+    const validPRs: any[] = []
     
-    for (const item of items) {
+    for (const item of allItems) {
       // Extract owner and repo from repository_url
       const repoMatch = item.repository_url?.match(/repos\/([^/]+)\/([^/]+)$/)
       if (!repoMatch) continue
@@ -113,35 +163,60 @@ export async function GET(req: Request) {
           continue
         }
         
-        pullRequests.push({
-          title: item.title,
-          url: item.html_url,
-          created_at: item.created_at,
+        validPRs.push({
+          ...item,
           merged_at: prData.merged_at,
-          state: prData.state,
-          draft: prData.draft || false,
-          labels: item.labels || [],
-          repository_url: item.repository_url,
-          number: item.number
+          draft: prData.draft || false
         })
       } catch (error) {
-        // If detailed fetch fails, skip this PR to avoid incorrect data
         console.error(`Failed to fetch PR details for ${owner}/${repo}#${item.number}:`, error)
         continue
       }
     }
 
+    // Now calculate pagination based on valid PRs
+    const totalPRs = validPRs.length
+    const startIndex = (page - 1) * perPage
+    const endIndex = startIndex + perPage
+    const paginatedValidPRs = validPRs.slice(startIndex, endIndex)
+
+    // Create the final PR objects (we already have the detailed info from filtering)
+    const pullRequests: PullRequest[] = paginatedValidPRs.map(item => ({
+      title: item.title,
+      url: item.html_url,
+      created_at: item.created_at,
+      merged_at: item.merged_at,
+      state: item.state || 'open',
+      draft: item.draft || false,
+      labels: item.labels || [],
+      repository_url: item.repository_url,
+      number: item.number
+    }))
+
+    const totalPages = Math.ceil(totalPRs / perPage)
+    const hasMore = page < totalPages
+
     const payload: OrgPRsResponse = {
       org,
       username: user,
-      totalPRs: pullRequests.length,
+      totalPRs,
       pullRequests,
       fetchedAt: new Date().toISOString(),
+      pagination: {
+        page,
+        perPage,
+        totalPages,
+        hasMore
+      }
     }
 
-    return new Response(JSON.stringify(payload), {
-      headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-      status: 200,
+    // Cache the data for 5 minutes
+    cache.set(cacheKey, payload, 300000);
+
+    return NextResponse.json(payload, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600', // Cache for 5 minutes, serve stale for 10 minutes
+      }
     })
   } catch (err: any) {
     const msg = err?.message || "Unknown error"

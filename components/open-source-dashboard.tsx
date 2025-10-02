@@ -43,6 +43,9 @@ export default function OpenSourceDashboard({ username }: { username: string }) 
   const { data, error, isLoading } = useSWR<OssStats>(`/api/oss-stats?user=${encodeURIComponent(username)}`, fetcher, {
     revalidateOnFocus: false,
     refreshInterval: 300000, // Auto-refresh every 5 minutes for live feed
+    dedupingInterval: 120000, // Dedupe requests within 2 minutes
+    focusThrottleInterval: 60000, // Throttle focus revalidation to 1 minute
+    revalidateOnReconnect: true,
   })
 
   // Function to handle clicks on organizations - navigate to org page

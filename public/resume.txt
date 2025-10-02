@@ -1,2 +1,0 @@
-Resume placeholder.
-Add your real PDF at public/resume.pdf later and update the link if needed.

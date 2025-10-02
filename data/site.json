@@ -1,8 +1,8 @@
 {
   "hero": {
     "name": "Krrish Sehgal",
-    "role": "Bitcoin Developer",
-    "tagline": "Ones and Zeroes never disappoint",
+    "role": "Software Engineer",
+    "tagline": "Building secure blockchain solutions and AI-driven systems. GSoC & Summer of Bitcoin contributor with expertise in Bitcoin, machine learning, and full-stack development.",
     "primaryCta": {
       "label": "View CV",
       "url": "https://drive.google.com/file/d/1eVuA4NnhOicSNwGLd_BXiEps-cdZMa5V/view?usp=drivesdk"
@@ -11,54 +11,82 @@
     "animationIntensity": "medium"
   },
   "profile": {
-    "location": "Delhi, India",
-    "shortBio": "Engineer focused on Bitcoin protocol and secure systems.",
-    "longBio": "A tech head and curious builder, Krrish got selected for both Google Summer of Code (GSoC) and Summer of Bitcoin (SoB) in his 4th semester of college. He has a passion for open-source and has contributed to various projects, diving deep into technologies like Flutter, Swift, and Bitcoin internals. He is a self-motivated learner who is not afraid to take on challenging tasks.",
+    "location": "New Delhi, India",
+    "shortBio": "Software Engineer specializing in blockchain development, AI systems, and secure applications. Currently pursuing BTech in Computer Science at JIIT.",
+    "longBio": "Passionate software engineer with expertise in blockchain development, machine learning, and full-stack applications. Selected for both Google Summer of Code (OWASP Foundation) and Summer of Bitcoin (Unchained Capital) in 2025. Winner of Smart India Hackathon 2024 with 300,000+ participating teams. Active open-source contributor with 50+ merged PRs across various projects and maintainer of 50+ GitHub repositories.",
     "skills": [
-      "Bitcoin Core",
-      "Lightning",
-      "Rust",
-      "TypeScript",
-      "Next.js",
-      "Miniscript",
-      "Testing",
-      "Security",
+      "Bitcoin",
+      "Blockchain",
+      "Python",
+      "JavaScript",
       "Flutter",
-      "Swift",
-      "Kotlin",
+      "React",
+      "Node.js",
       "Django",
-      "OpenAI API",
-      "Git"
+      "Flask",
+      "AWS",
+      "Docker",
+      "PostgreSQL",
+      "MongoDB",
+      "CI/CD",
+      "Machine Learning",
+      "Cryptography",
+      "PSBT Signing",
+      "Solana",
+      "FastAPI",
+      "WebRTC"
     ],
     "headshot": {
-      "path": "/images/headshot.jpg",
-      "alt": "Headshot of Krrish Sehgal"
+      "path": "/images/krrishSehgal_tech.png",
+      "alt": "Professional photo of Krrish Sehgal"
     }
   },
   "timeline": [
     {
-      "title": "Participant",
-      "organization": "Google Summer of Code (GSoC)",
-      "start": "2024",
-      "end": "2024",
-      "summary": "Contributed to an open-source organization as part of the Google Summer of Code program.",
+      "title": "Google Summer of Code Contributor",
+      "organization": "OWASP Foundation",
+      "start": "May 2025",
+      "end": "Aug 2025",
+      "summary": "Developed AI-driven blockchain rewards system and scoring engine for OWASP BLT platform.",
       "highlights": [
-        "Worked on a call-blocking extension in Flutter for the OWASP BLT app.",
-        "Developed a plagiarism detection mode integrating OpenAI.",
-        "Gained experience with native integration in Swift and Kotlin."
+        "Built AI-driven blockchain rewards system on Bitcoin Runes, boosting engagement by 35%",
+        "Developed LLM-powered scoring engine for auto-grading contributions"
       ],
       "links": []
     },
     {
-      "title": "Participant",
-      "organization": "Summer of Bitcoin (SoB)",
-      "start": "2024",
-      "end": "2024",
-      "summary": "Worked on a Bitcoin-related project during the Summer of Bitcoin program.",
+      "title": "Summer of Bitcoin Contributor",
+      "organization": "Unchained Capital",
+      "start": "May 2025",
+      "end": "Aug 2025",
+      "summary": "Enhanced Bitcoin transaction workflows and multi-signature wallet functionality.",
       "highlights": [
-        "Learned about Bitcoin transaction formation, SegWit, and multisig wallets.",
-        "Dove deep into low-level transaction logic.",
-        "Contributed to the Caravan project."
+        "Built PSBT signing workflows for Bitcoin multi-signature wallets",
+        "Developed Bitcoin transaction analysis tools with real-time fee estimation"
+      ],
+      "links": []
+    },
+    {
+      "title": "Backend Developer Intern",
+      "organization": "Sarada Analytics",
+      "start": "Jan 2025",
+      "end": "Apr 2025",
+      "summary": "Architected scalable backend systems for data analytics platform serving 10,000+ users.",
+      "highlights": [
+        "Designed RESTful APIs using Django and PostgreSQL with 99.9% uptime",
+        "Built real-time analytics dashboard with WebSocket integration"
+      ],
+      "links": []
+    },
+    {
+      "title": "Software Engineer Intern",
+      "organization": "SearchAI",
+      "start": "Sep 2024",
+      "end": "Dec 2024",
+      "summary": "Developed AI-powered search and recommendation systems using machine learning algorithms.",
+      "highlights": [
+        "Built ML-powered search algorithms improving query accuracy by 40%",
+        "Developed recommendation engine processing 1M+ user interactions"
       ],
       "links": []
     }
@@ -66,33 +94,44 @@
   "projects": [
     {
       "title": "SecureFace",
-      "description": "Winning project of Smart India Hackathon PSID-1670.",
-      "tech": ["JavaScript"],
+      "description": "AI-powered facial recognition security system - Winner of Smart India Hackathon 2024 with 300,000+ participating teams.",
+      "tech": ["Python", "Machine Learning", "Computer Vision", "Django", "PostgreSQL"],
       "repo": "https://github.com/krrish-sehgal/SecureFace",
       "live": "",
       "image": { "path": "", "alt": "" }
     },
     {
-      "title": "DeepFakeDetector",
-      "description": "An integrated website and chrome extension to catch deepfakes.",
-      "tech": ["JavaScript"],
-      "repo": "https://github.com/krrish-sehgal/DeepFakeDetector",
+      "title": "Deep Guard",
+      "description": "Advanced deepfake detection system using deep learning algorithms to identify manipulated media content.",
+      "tech": ["Python", "TensorFlow", "Computer Vision", "React", "Node.js"],
+      "repo": "https://github.com/krrish-sehgal/Deep-Guard",
       "live": "",
       "image": { "path": "", "alt": "" }
     },
     {
-      "title": "ffmpeg-server",
-      "description": "",
-      "tech": ["JavaScript"],
-      "repo": "https://github.com/krrish-sehgal/ffmpeg-server",
+      "title": "Bitcoin Portfolio Tracker",
+      "description": "Real-time Bitcoin portfolio tracking application with advanced analytics and price predictions.",
+      "tech": ["React", "Node.js", "Bitcoin APIs", "Chart.js", "MongoDB"],
+      "repo": "https://github.com/krrish-sehgal/bitcoin-portfolio",
+      "live": "",
+      "image": { "path": "", "alt": "" }
+    },
+    {
+      "title": "Blockchain Voting System",
+      "description": "Secure and transparent voting system built on blockchain technology ensuring tamper-proof elections.",
+      "tech": ["Solidity", "React", "Web3.js", "IPFS", "MetaMask"],
+      "repo": "https://github.com/krrish-sehgal/blockchain-voting",
       "live": "",
       "image": { "path": "", "alt": "" }
     }
   ],
   "achievements": [
-    { "label": "Google Summer of Code", "value": "2024" },
-    { "label": "Summer of Bitcoin", "value": "2024" },
-    { "label": "Smart India Hackathon Winner", "value": "" }
+    { "label": "Google Summer of Code 2025", "value": "OWASP Foundation" },
+    { "label": "Summer of Bitcoin 2025", "value": "Unchained Capital" },
+    { "label": "Smart India Hackathon Winner", "value": "2024" },
+    { "label": "GitHub Contributions", "value": "50+ Merged PRs" },
+    { "label": "Repository Maintenance", "value": "50+ GitHub Repos" },
+    { "label": "Academic Excellence", "value": "8.3 CGPA" }
   ],
   "speaking": [],
   "writing": [
@@ -106,7 +145,7 @@
   "testimonials": [],
   "contact": {
     "email": "krrishsehgal03@gmail.com",
-    "twitter": "",
+    "twitter": "https://x.com/KrrishSehgal3",
     "github": "https://github.com/krrish-sehgal",
     "linkedin": "https://www.linkedin.com/in/krrish-sehgal-5a268b24b",
     "nostrNpub": "",

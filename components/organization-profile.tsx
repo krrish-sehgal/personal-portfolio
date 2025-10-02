@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import useSWR from "swr"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink, GitPullRequest, Calendar, User } from "lucide-react"
+import { ArrowLeft, ExternalLink, GitPullRequest, Calendar, User, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 interface PullRequest {
@@ -26,6 +26,12 @@ interface OrgPRsResponse {
   totalPRs: number
   pullRequests: PullRequest[]
   fetchedAt: string
+  pagination: {
+    page: number
+    perPage: number
+    totalPages: number
+    hasMore: boolean
+  }
 }
 
 // Organization descriptions and contributions
@@ -100,14 +106,57 @@ function getOrgInfo(orgName: string) {
 }
 
 export function OrganizationProfile({ orgName }: { orgName: string }) {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [allPRs, setAllPRs] = useState<PullRequest[]>([])
+  const [totalPRsCount, setTotalPRsCount] = useState<number>(0)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(false)
+
   const { data, error, isLoading } = useSWR<OrgPRsResponse>(
-    `/api/org-prs?org=${encodeURIComponent(orgName)}`,
+    `/api/org-prs?org=${encodeURIComponent(orgName)}&page=${currentPage}`,
     fetcher,
     {
       revalidateOnFocus: false,
       refreshInterval: 300000, // Auto-refresh every 5 minutes
+      dedupingInterval: 120000, // Dedupe requests within 2 minutes
+      focusThrottleInterval: 60000, // Throttle focus revalidation to 1 minute
+      revalidateOnReconnect: true,
     }
   )
+
+  // Accumulate PRs from all pages
+  useEffect(() => {
+    if (data?.pullRequests) {
+      if (currentPage === 1) {
+        setAllPRs(data.pullRequests)
+        setTotalPRsCount(data.totalPRs) // Store total from first page
+      } else {
+        setAllPRs(prev => [...prev, ...data.pullRequests])
+      }
+      setIsLoadingMore(false)
+      setButtonClicked(false)
+    }
+  }, [data, currentPage])
+
+  // Load more function
+  const loadMore = useCallback(() => {
+    if (data?.pagination.hasMore && !isLoading && !isLoadingMore && !buttonClicked) {
+      setButtonClicked(true)
+      setIsLoadingMore(true)
+      setCurrentPage(prev => prev + 1)
+    }
+  }, [data?.pagination.hasMore, isLoading, isLoadingMore, buttonClicked])
+
+  // Infinite scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+      loadMore()
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [loadMore])
 
   const orgInfo = getOrgInfo(orgName)
 
@@ -190,7 +239,7 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
               <CardDescription>Merged pull requests</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-semibold">{data.totalPRs}</p>
+              <p className="text-3xl font-semibold">{totalPRsCount || data?.totalPRs || 0}</p>
             </CardContent>
           </Card>
           <Card>
@@ -233,11 +282,11 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
+          {(isLoading && currentPage === 1) ? (
             <div className="text-muted-foreground">Loading pull requests...</div>
-          ) : data && data.pullRequests.length > 0 ? (
+          ) : allPRs.length > 0 ? (
             <div className="space-y-3">
-              {data.pullRequests.map((pr) => (
+              {allPRs.map((pr) => (
                 <a
                   key={`${pr.repository_url}-${pr.number}`}
                   href={pr.url}
@@ -309,6 +358,33 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
                   </div>
                 </a>
               ))}
+              
+              {/* Load more section */}
+              {data?.pagination.hasMore && (
+                <div className="text-center pt-4">
+                  {(isLoadingMore || buttonClicked) ? (
+                    <div className="flex items-center justify-center gap-2 py-2 px-4 text-[#F7931A]">
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <span className="text-sm font-medium">Loading more PRs...</span>
+                    </div>
+                  ) : (
+                    <Button 
+                      variant="outline" 
+                      onClick={loadMore}
+                      className="bg-[#F7931A]/10 border-[#F7931A]/20 hover:bg-[#F7931A]/20"
+                    >
+                      Load More PRs
+                    </Button>
+                  )}
+                </div>
+              )}
+              
+              {/* Progress indicator */}
+              {totalPRsCount > 0 && allPRs.length > 0 && (
+                <div className="text-center pt-2 text-sm text-muted-foreground">
+                  Showing {allPRs.length} of {totalPRsCount} pull requests
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-center py-8 text-muted-foreground">
