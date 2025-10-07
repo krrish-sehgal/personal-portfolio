@@ -7,13 +7,16 @@
       "label": "View CV",
       "url": "https://drive.google.com/file/d/1eVuA4NnhOicSNwGLd_BXiEps-cdZMa5V/view?usp=drivesdk"
     },
-    "secondaryCta": { "label": "Hire Me", "url": "mailto:krrishsehgal03@gmail.com" },
+    "secondaryCta": {
+      "label": "Hire Me",
+      "url": "mailto:krrishsehgal03@gmail.com"
+    },
     "animationIntensity": "medium"
   },
   "profile": {
     "location": "New Delhi, India",
     "shortBio": "Software Engineer specializing in blockchain development, AI systems, and secure applications. Currently pursuing BTech in Computer Science at JIIT.",
-    "longBio": "Passionate software engineer with expertise in blockchain development, machine learning, and full-stack applications. Selected for both Google Summer of Code (OWASP Foundation) and Summer of Bitcoin (Unchained Capital) in 2025. Winner of Smart India Hackathon 2024 with 300,000+ participating teams. Active open-source contributor with 50+ merged PRs across various projects and maintainer of 50+ GitHub repositories.",
+    "longBio": "Passionate software engineer with expertise in blockchain development, machine learning, and full-stack applications. Selected for both Google Summer of Code (OWASP Foundation) and Summer of Bitcoin (Unchained Capital) in 2025. Winner of Smart India Hackathon 2024 with 300,000+ participating teams. Active open-source contributor across various projects and maintainer of multiple GitHub repositories.",
     "skills": [
       "Bitcoin",
       "Blockchain",
@@ -43,18 +46,6 @@
   },
   "timeline": [
     {
-      "title": "Google Summer of Code Contributor",
-      "organization": "OWASP Foundation",
-      "start": "May 2025",
-      "end": "Aug 2025",
-      "summary": "Developed AI-driven blockchain rewards system and scoring engine for OWASP BLT platform.",
-      "highlights": [
-        "Built AI-driven blockchain rewards system on Bitcoin Runes, boosting engagement by 35%",
-        "Developed LLM-powered scoring engine for auto-grading contributions"
-      ],
-      "links": []
-    },
-    {
       "title": "Summer of Bitcoin Contributor",
       "organization": "Unchained Capital",
       "start": "May 2025",
@@ -63,6 +54,18 @@
       "highlights": [
         "Built PSBT signing workflows for Bitcoin multi-signature wallets",
         "Developed Bitcoin transaction analysis tools with real-time fee estimation"
+      ],
+      "links": []
+    },
+    {
+      "title": "Google Summer of Code Contributor",
+      "organization": "OWASP Foundation",
+      "start": "May 2025",
+      "end": "Aug 2025",
+      "summary": "Developed AI-driven blockchain rewards system and scoring engine for OWASP BLT platform.",
+      "highlights": [
+        "Built AI-driven blockchain rewards system on Bitcoin Runes, boosting engagement by 35%",
+        "Developed LLM-powered scoring engine for auto-grading contributions"
       ],
       "links": []
     },
@@ -93,45 +96,31 @@
   ],
   "projects": [
     {
-      "title": "SecureFace",
-      "description": "AI-powered facial recognition security system - Winner of Smart India Hackathon 2024 with 300,000+ participating teams.",
-      "tech": ["Python", "Machine Learning", "Computer Vision", "Django", "PostgreSQL"],
-      "repo": "https://github.com/krrish-sehgal/SecureFace",
-      "live": "",
+      "title": "Bitcoin QR Tools",
+      "description": "A comprehensive suite of Bitcoin tools for generating and scanning QR codes for Bitcoin addresses, transactions, and PSBT workflows. Features include address validation, transaction parsing, and multi-format QR code generation for seamless Bitcoin payments.",
+      "tech": ["React", "TypeScript", "Bitcoin.js", "QR Code", "Tailwind CSS"],
+      "repo": "https://github.com/krrish-sehgal/bitcoin-qr-tools",
+      "live": "https://bitcoin-qr-tool.vercel.app",
       "image": { "path": "", "alt": "" }
     },
     {
-      "title": "Deep Guard",
-      "description": "Advanced deepfake detection system using deep learning algorithms to identify manipulated media content.",
-      "tech": ["Python", "TensorFlow", "Computer Vision", "React", "Node.js"],
-      "repo": "https://github.com/krrish-sehgal/Deep-Guard",
-      "live": "",
-      "image": { "path": "", "alt": "" }
-    },
-    {
-      "title": "Bitcoin Portfolio Tracker",
-      "description": "Real-time Bitcoin portfolio tracking application with advanced analytics and price predictions.",
-      "tech": ["React", "Node.js", "Bitcoin APIs", "Chart.js", "MongoDB"],
-      "repo": "https://github.com/krrish-sehgal/bitcoin-portfolio",
-      "live": "",
-      "image": { "path": "", "alt": "" }
-    },
-    {
-      "title": "Blockchain Voting System",
-      "description": "Secure and transparent voting system built on blockchain technology ensuring tamper-proof elections.",
-      "tech": ["Solidity", "React", "Web3.js", "IPFS", "MetaMask"],
-      "repo": "https://github.com/krrish-sehgal/blockchain-voting",
-      "live": "",
+      "title": "WebAuthn Bitcoin Playground",
+      "description": "Interactive playground exploring WebAuthn integration with Bitcoin wallets. Demonstrates passwordless authentication and secure key management for Bitcoin transactions using FIDO2/WebAuthn standards, combining modern web security with cryptocurrency workflows.",
+      "tech": ["Next.js", "TypeScript", "WebAuthn", "Bitcoin", "FIDO2"],
+      "repo": "https://github.com/krrish-sehgal/webauthn-bitcoin-playground",
+      "live": "https://webauthn-bitcoin-playground.vercel.app",
       "image": { "path": "", "alt": "" }
     }
   ],
   "achievements": [
-    { "label": "Google Summer of Code 2025", "value": "OWASP Foundation" },
+    { "label": "Alby Bug Bounty ", "value": "Got paid 75k Lightning Sats" },
+    {
+      "label": "TON Hackathon Winner",
+      "value": "Got paid 250$ worth of TON coin"
+    },
     { "label": "Summer of Bitcoin 2025", "value": "Unchained Capital" },
-    { "label": "Smart India Hackathon Winner", "value": "2024" },
-    { "label": "GitHub Contributions", "value": "50+ Merged PRs" },
-    { "label": "Repository Maintenance", "value": "50+ GitHub Repos" },
-    { "label": "Academic Excellence", "value": "8.3 CGPA" }
+    { "label": "Google Summer of Code 2025", "value": "OWASP Foundation" },
+    { "label": "Smart India Hackathon Winner", "value": "2024" }
   ],
   "speaking": [],
   "writing": [
@@ -148,7 +137,7 @@
     "twitter": "https://x.com/KrrishSehgal3",
     "github": "https://github.com/krrish-sehgal",
     "linkedin": "https://www.linkedin.com/in/krrish-sehgal-5a268b24b",
-    "nostrNpub": "",
+    "nostrNpub": "npub1qzq0ffcuvt4apyp00sp06g52qwexgp9e54sd0yeqc67uu3lls2wsa4z7wc",
     "lightning": "",
     "lnurl": "",
     "btcAddress": "",
@@ -156,7 +145,7 @@
     "extra": []
   },
   "seo": {
-    "title": "Krrish Sehgal – Bitcoin Developer",
+    "title": "Krrish Sehgal - Bitcoin Developer",
     "description": "Bitcoin/Lightning engineer building secure, open financial software.",
     "ogImage": { "path": "/images/og.jpg", "alt": "Portfolio preview image" }
   },

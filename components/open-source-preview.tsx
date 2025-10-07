@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink, Star, GitFork, GitPullRequest } from "lucide-react";
+import { Github, ExternalLink, GitPullRequest } from "lucide-react";
 import Link from "next/link";
 
 export function OpenSourcePreview() {
@@ -12,45 +12,36 @@ export function OpenSourcePreview() {
     totalRepos: "50+",
     totalPRs: "50+",
     totalStars: "100+",
-    contributions: "300+"
+    contributions: "300+",
   };
 
-  const featuredProjects = [
+  const bitcoinProjects = [
     {
-      name: "SecureFace",
-      description: "Face recognition system with anti-spoofing mechanisms using deep learning",
-      language: "Python",
-      stars: 15,
-      forks: 8,
-      url: "https://github.com/krrish-sehgal/SecureFace"
+      name: "Caravan Bitcoin",
+      description:
+        "Bitcoin multi-signature wallet coordination tool - Contributing to PSBT workflows and transaction handling",
+      org: "caravan-bitcoin",
+      icon: "₿",
     },
     {
-      name: "Deep Guard",
-      description: "Advanced deepfake detection system with real-time processing capabilities",
-      language: "Python", 
-      stars: 12,
-      forks: 5,
-      url: "https://github.com/krrish-sehgal/DeepGuard"
+      name: "GetAlby",
+      description:
+        "Bitcoin Lightning wallet browser extension - Building features for seamless Lightning Network payments",
+      org: "getAlby",
+      icon: "⚡",
     },
-    {
-      name: "OWASP BLT",
-      description: "Contributed to AI-driven blockchain rewards system during GSoC 2025",
-      language: "JavaScript",
-      stars: 25,
-      forks: 12,
-      url: "https://github.com/OWASP/BLT"
-    }
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-orange-50/30 to-yellow-50/30 dark:from-orange-950/20 dark:to-yellow-950/20">
+    <section className="py-12 md:py-16 bg-gradient-to-br from-orange-50/30 to-yellow-50/30 dark:from-orange-950/20 dark:to-yellow-950/20">
       <div className="w-full max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
             Open Source Contributions
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-4">
-            Active contributor to various open source projects with a focus on blockchain, AI, and security
+            Active contributor to various open source projects with a focus on
+            blockchain, AI, and security
           </p>
           <div className="flex items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
             <div className="flex items-center gap-2">
@@ -72,78 +63,91 @@ export function OpenSourcePreview() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           <Card className="text-center border-[#F7931A]/20 hover:border-[#F7931A]/40 transition-colors">
             <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-[#F7931A] mb-2">{stats.totalRepos}</div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Repositories</p>
+              <div className="text-2xl font-bold text-[#F7931A] mb-2">
+                {stats.totalRepos}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Repositories
+              </p>
             </CardContent>
           </Card>
           <Card className="text-center border-[#F7931A]/20 hover:border-[#F7931A]/40 transition-colors">
             <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-[#F7931A] mb-2">{stats.totalPRs}</div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Merged PRs</p>
+              <div className="text-2xl font-bold text-[#F7931A] mb-2">
+                {stats.totalPRs}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Merged PRs
+              </p>
             </CardContent>
           </Card>
           <Card className="text-center border-[#F7931A]/20 hover:border-[#F7931A]/40 transition-colors">
             <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-[#F7931A] mb-2">{stats.totalStars}</div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Stars Earned</p>
+              <div className="text-2xl font-bold text-[#F7931A] mb-2">
+                {stats.totalStars}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Stars Earned
+              </p>
             </CardContent>
           </Card>
           <Card className="text-center border-[#F7931A]/20 hover:border-[#F7931A]/40 transition-colors">
             <CardContent className="pt-6">
-              <div className="text-2xl font-bold text-[#F7931A] mb-2">{stats.contributions}</div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Contributions</p>
+              <div className="text-2xl font-bold text-[#F7931A] mb-2">
+                {stats.contributions}
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Contributions
+              </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Featured Projects */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-          {featuredProjects.map((project, index) => (
-            <Card key={index} className="border-[#F7931A]/20 hover:border-[#F7931A]/40 transition-all hover:shadow-lg hover:shadow-[#F7931A]/10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-gray-900 dark:text-gray-100">
-                    {project.name}
-                  </CardTitle>
-                  <Badge variant="secondary" className="bg-[#F7931A]/10 text-[#F7931A] border-[#F7931A]/20">
-                    {project.language}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                  {project.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4" />
-                      {project.stars}
+        {/* Main Bitcoin Projects */}
+        <div className="mb-8">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+            🪙 Featured Bitcoin Contributions
+          </h3>
+          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+            {bitcoinProjects.map((project, index) => (
+              <Link key={index} href={`/open-source/${project.org}`}>
+                <Card className="border-[#F7931A]/30 hover:border-[#F7931A] transition-all hover:shadow-xl hover:shadow-[#F7931A]/20 cursor-pointer group h-full">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="text-4xl">{project.icon}</div>
+                      <CardTitle className="text-xl text-gray-900 dark:text-gray-100 group-hover:text-[#F7931A] transition-colors">
+                        {project.name}
+                      </CardTitle>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <GitFork className="h-4 w-4" />
-                      {project.forks}
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                      {project.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <Badge
+                        variant="secondary"
+                        className="bg-[#F7931A]/10 text-[#F7931A] border-[#F7931A]/20"
+                      >
+                        Bitcoin
+                      </Badge>
+                      <div className="flex items-center gap-2 text-sm text-[#F7931A] group-hover:translate-x-1 transition-transform">
+                        <span>View Contributions</span>
+                        <ExternalLink className="h-4 w-4" />
+                      </div>
                     </div>
-                  </div>
-                  <a 
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#F7931A] hover:text-[#F7931A]/80 transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* CTA to Full Dashboard */}
         <div className="text-center">
           <Link href="/open-source">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-[#F7931A] hover:bg-[#F7931A]/90 text-white font-medium px-8 py-3 transition-all hover:scale-105 hover:shadow-lg hover:shadow-[#F7931A]/25"
             >
               <Github className="mr-2 h-5 w-5" />
@@ -152,7 +156,8 @@ export function OpenSourcePreview() {
             </Button>
           </Link>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
-            🔥 Explore live PR feeds, organization contributions, and detailed statistics
+            🔥 Explore live PR feeds, organization contributions, and detailed
+            statistics
           </p>
           <div className="flex items-center justify-center gap-2 mt-2 text-xs text-[#F7931A]">
             <span className="animate-pulse">●</span>
