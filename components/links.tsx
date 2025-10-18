@@ -119,11 +119,11 @@ export function ImportantLinks() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="group rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary"
+            className="group rounded-xl border border-border bg-card p-4 transition-all hover:border-[#F7931A] hover:shadow-lg hover:shadow-[#F7931A]/10"
             aria-label={label}
           >
             <div className="flex items-center gap-3">
-              <div className="rounded-md bg-secondary p-2 text-accent group-hover:text-primary">
+              <div className="rounded-md bg-secondary p-2 text-foreground group-hover:text-[#F7931A] group-hover:bg-[#F7931A]/10 transition-all">
                 <Icon className="h-5 w-5" />
               </div>
               <div>

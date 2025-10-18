@@ -203,7 +203,7 @@ export default function OpenSourceDashboard({
       </Card>
 
       {/* PRs by Type (Pie) */}
-      <Card>
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>PRs by Type</CardTitle>
           <CardDescription>
@@ -211,7 +211,7 @@ export default function OpenSourceDashboard({
             infra)
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={{
               feature: { label: "Feature", color: "#F7931A" }, // Bitcoin orange
@@ -220,7 +220,7 @@ export default function OpenSourceDashboard({
               infra: { label: "Infra", color: "#FF8C00" }, // Dark orange
               other: { label: "Other", color: "#B8860B" }, // Dark golden rod
             }}
-            className="h-[320px]"
+            className="h-[280px] sm:h-[320px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -243,7 +243,7 @@ export default function OpenSourceDashboard({
                   nameKey="type"
                   cx="50%"
                   cy="50%"
-                  outerRadius={110}
+                  outerRadius="70%"
                   label
                 />
               </PieChart>
@@ -253,7 +253,7 @@ export default function OpenSourceDashboard({
       </Card>
 
       {/* PRs by Organization (Bar) */}
-      <Card>
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             Contributions by Organization
@@ -267,20 +267,29 @@ export default function OpenSourceDashboard({
             GitHub
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={{
               orgs: { label: "PRs", color: "#F7931A" }, // Bitcoin orange
             }}
-            className="h-[320px]"
+            className="h-[280px] sm:h-[320px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={orgData} margin={{ left: 10, right: 10 }}>
+              <BarChart
+                data={orgData}
+                margin={{ left: 0, right: 0, top: 5, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="org" />
-                <YAxis allowDecimals={false} />
+                <XAxis
+                  dataKey="org"
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: "12px" }} />
                 <Bar
                   dataKey="count"
                   name="Merged PRs"
@@ -296,22 +305,25 @@ export default function OpenSourceDashboard({
       </Card>
 
       {/* Monthly Series (Area) */}
-      <Card>
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Monthly Activity</CardTitle>
           <CardDescription>
             PRs merged per month over the last 12 months
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={{
               prs: { label: "PRs", color: "#FFD700" }, // Gold
             }}
-            className="h-[320px]"
+            className="h-[280px] sm:h-[320px] w-full"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={monthly}>
+              <AreaChart
+                data={monthly}
+                margin={{ left: 0, right: 0, top: 5, bottom: 5 }}
+              >
                 <defs>
                   <linearGradient id="fillPrs" x1="0" y1="0" x2="0" y2="1">
                     <stop
@@ -327,10 +339,16 @@ export default function OpenSourceDashboard({
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis allowDecimals={false} />
+                <XAxis
+                  dataKey="month"
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: "12px" }} />
                 <Area
                   type="monotone"
                   dataKey="prs"
