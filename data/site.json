@@ -46,6 +46,18 @@
   },
   "timeline": [
     {
+      "title": "Bitcoin Open Source Contributor",
+      "organization": "Alby & Caravan",
+      "start": "Sep 2025",
+      "end": "Present",
+      "summary": "Contributing to Bitcoin and Lightning Network open source projects.",
+      "highlights": [
+        "Active contributor to Alby's Bitcoin Connect and Lightning integration",
+        "Contributing to Caravan's multi-signature wallet functionality"
+      ],
+      "links": []
+    },
+    {
       "title": "Summer of Bitcoin Contributor",
       "organization": "Unchained Capital",
       "start": "May 2025",
