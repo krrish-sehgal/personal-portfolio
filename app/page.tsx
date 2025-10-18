@@ -2,11 +2,10 @@ import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { CareerTimeline } from "@/components/timeline";
-import { Projects } from "@/components/projects";
+import { ProjectsPreview } from "@/components/projects-preview";
 import { OpenSourcePreview } from "@/components/open-source-preview";
 import { Achievements } from "@/components/achievements";
 import { ImportantLinks } from "@/components/links";
-import site from "@/data/site.json";
 
 export default function Page() {
   return (
@@ -23,7 +22,7 @@ export default function Page() {
         id="projects"
         className="w-full max-w-none px-4 py-12 md:py-16 bg-muted/30"
       >
-        <Projects />
+        <ProjectsPreview />
       </section>
       <section id="open-source" className="w-full max-w-none">
         <OpenSourcePreview />

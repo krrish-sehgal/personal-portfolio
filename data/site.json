@@ -110,6 +110,14 @@
       "repo": "https://github.com/krrish-sehgal/webauthn-bitcoin-playground",
       "live": "https://webauthn-bitcoin-playground.vercel.app",
       "image": { "path": "", "alt": "" }
+    },
+    {
+      "title": "NWC Playground",
+      "description": "Pure Nostr Wallet Connect implementation playground for testing all NWC commands with Bitcoin Connect integration. Features real-time command execution, transaction history viewer, and quick zap interface for Lightning Network payments with support for all NWC protocol methods.",
+      "tech": ["Next.js", "TypeScript", "NWC", "Lightning", "Alby SDK"],
+      "repo": "https://github.com/krrish-sehgal/nwc-playground",
+      "live": "https://nwc-playground.vercel.app",
+      "image": { "path": "", "alt": "" }
     }
   ],
   "achievements": [
