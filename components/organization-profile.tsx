@@ -210,7 +210,11 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
       <div className="space-y-6">
         <div className="flex items-center gap-4">
           <Link href="/open-source">
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-border hover:border-[#F7931A] hover:text-[#F7931A] hover:bg-[#F7931A]/10 transition-all"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Dashboard
             </Button>
@@ -228,7 +232,11 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
       {/* Back Button */}
       <div className="flex items-center gap-4">
         <Link href="/open-source">
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-border hover:border-[#F7931A] hover:text-[#F7931A] hover:bg-[#F7931A]/10 transition-all"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Dashboard
           </Button>
