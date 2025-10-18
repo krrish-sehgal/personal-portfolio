@@ -25,10 +25,25 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
       <nav className="container mx-auto flex items-center justify-between px-4 py-3">
         <a
           href="/"
-          className="font-mono text-sm text-muted-foreground hover:text-foreground"
+          className="group flex items-center gap-2 font-mono text-sm font-medium transition-all hover:scale-105"
           aria-label="Go to home"
         >
-          {"{ BTC · Portfolio }"}
+          <svg
+            className="w-4 h-4 text-muted-foreground group-hover:text-[#F7931A] transition-colors"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 12h18M3 12l6-6m-6 6l6 6"
+            />
+          </svg>
+          <span className="text-foreground group-hover:text-[#F7931A] transition-colors">
+            {"{ BTC · Portfolio }"}
+          </span>
         </a>
         {showNavLinks && (
           <div className="flex items-center gap-1">
