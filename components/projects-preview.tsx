@@ -32,15 +32,15 @@ export function ProjectsPreview() {
 
       {/* Horizontal Scrollable List */}
       <div className="relative -mx-4 px-4 md:mx-0 md:px-0">
-        {/* Scroll Indicators */}
-        <div className="hidden md:block absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="hidden md:block absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        {/* Scroll Indicators - only show when content overflows */}
+        <div className="hidden xl:block absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="hidden xl:block absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:scrollbar-visible scroll-smooth px-2">
+        <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide xl:scrollbar-visible scroll-smooth px-2 justify-start xl:justify-center">
           {projects.map((project, index) => (
             <Card
               key={index}
-              className="group relative overflow-hidden border-border bg-card transition-all hover:border-[#F7931A]/50 hover:shadow-lg hover:shadow-[#F7931A]/10 min-w-[280px] sm:min-w-[320px] md:min-w-[380px] lg:min-w-[420px] snap-center flex-shrink-0"
+              className="group relative overflow-hidden border-border bg-card transition-all hover:border-[#F7931A]/50 hover:shadow-lg hover:shadow-[#F7931A]/10 min-w-[280px] sm:min-w-[320px] md:min-w-[380px] lg:min-w-[400px] snap-center flex-shrink-0"
             >
               <CardHeader>
                 <CardTitle className="group-hover:text-[#F7931A] transition-colors">
