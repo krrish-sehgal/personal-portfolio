@@ -20,9 +20,11 @@ export default function Page() {
       </section>
       <section
         id="projects"
-        className="w-full max-w-none px-4 py-12 md:py-16 bg-muted/30"
+        className="w-full max-w-none py-12 md:py-16 bg-muted/30 overflow-hidden"
       >
-        <ProjectsPreview />
+        <div className="px-4">
+          <ProjectsPreview />
+        </div>
       </section>
       <section id="open-source" className="w-full max-w-none">
         <OpenSourcePreview />
