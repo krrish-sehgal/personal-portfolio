@@ -12,12 +12,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   ArrowLeft,
   ExternalLink,
   GitPullRequest,
   Calendar,
   User,
   Loader2,
+  Filter,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -136,6 +144,9 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
   const [totalPRsCount, setTotalPRsCount] = useState<number>(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [prFilter, setPrFilter] = useState<"all" | "merged" | "open" | "draft">(
+    "all"
+  );
 
   const { data, error, isLoading } = useSWR<OrgPRsResponse>(
     `/api/org-prs?org=${encodeURIComponent(orgName)}&page=${currentPage}`,
@@ -272,7 +283,7 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Total PRs</CardTitle>
-              <CardDescription>Merged pull requests</CardDescription>
+              <CardDescription>in getAlby</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-semibold">
@@ -307,18 +318,59 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
       {/* PR Feed */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <GitPullRequest className="h-5 w-5" />
-            Pull Request Feed
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              Live
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2 mb-2">
+                <GitPullRequest className="h-5 w-5" />
+                Pull Request Feed
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  Live
+                </div>
+              </CardTitle>
+              <CardDescription>
+                Recent pull requests in {orgInfo.name} •
+                {prFilter === "all"
+                  ? " All PRs"
+                  : prFilter === "merged"
+                  ? " Merged PRs"
+                  : prFilter === "open"
+                  ? " Open PRs"
+                  : " Draft PRs"}{" "}
+                • Click to view on GitHub
+              </CardDescription>
             </div>
-          </CardTitle>
-          <CardDescription>
-            Recent pull requests in {orgInfo.name} • Merged, Open & Draft PRs •
-            Click to view on GitHub
-          </CardDescription>
+            <Select
+              value={prFilter}
+              onValueChange={(value: any) => setPrFilter(value)}
+            >
+              <SelectTrigger className="w-[140px] border-[#F7931A]/30 hover:border-[#F7931A]">
+                <Filter className="h-4 w-4 mr-2 text-[#F7931A]" />
+                <SelectValue placeholder="Filter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All PRs</SelectItem>
+                <SelectItem value="merged">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#8957e5]"></span>
+                    Merged
+                  </span>
+                </SelectItem>
+                <SelectItem value="open">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#3fb950]"></span>
+                    Open
+                  </span>
+                </SelectItem>
+                <SelectItem value="draft">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#6b7280]"></span>
+                    Draft
+                  </span>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading && currentPage === 1 ? (
@@ -327,78 +379,87 @@ export function OrganizationProfile({ orgName }: { orgName: string }) {
             </div>
           ) : allPRs.length > 0 ? (
             <div className="space-y-3">
-              {allPRs.map((pr) => (
-                <a
-                  key={`${pr.repository_url}-${pr.number}`}
-                  href={pr.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-primary hover:shadow-md hover:scale-[1.02]"
-                  style={{
-                    background: `linear-gradient(135deg, transparent 0%, ${orgInfo.colors.primary}08 100%)`,
-                  }}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <GitPullRequest
-                          className="h-4 w-4"
-                          style={{ color: getPRStatus(pr).color }}
-                        />
-                        <span className="text-sm text-muted-foreground">
-                          #{pr.number}
-                        </span>
-                        <Badge
-                          variant="secondary"
-                          className="text-xs"
-                          style={{
-                            backgroundColor: getPRStatus(pr).bgColor,
-                            color: getPRStatus(pr).color,
-                          }}
-                        >
-                          {getPRStatus(pr).label}
-                        </Badge>
+              {allPRs
+                .filter((pr) => {
+                  if (prFilter === "all") return true;
+                  if (prFilter === "merged") return pr.merged_at;
+                  if (prFilter === "open")
+                    return pr.state === "open" && !pr.draft;
+                  if (prFilter === "draft") return pr.draft;
+                  return true;
+                })
+                .map((pr) => (
+                  <a
+                    key={`${pr.repository_url}-${pr.number}`}
+                    href={pr.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-primary hover:shadow-md hover:scale-[1.02]"
+                    style={{
+                      background: `linear-gradient(135deg, transparent 0%, ${orgInfo.colors.primary}08 100%)`,
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <GitPullRequest
+                            className="h-4 w-4"
+                            style={{ color: getPRStatus(pr).color }}
+                          />
+                          <span className="text-sm text-muted-foreground">
+                            #{pr.number}
+                          </span>
+                          <Badge
+                            variant="secondary"
+                            className="text-xs"
+                            style={{
+                              backgroundColor: getPRStatus(pr).bgColor,
+                              color: getPRStatus(pr).color,
+                            }}
+                          >
+                            {getPRStatus(pr).label}
+                          </Badge>
+                        </div>
+                        <h3 className="font-semibold group-hover:text-primary transition-colors truncate">
+                          {pr.title}
+                        </h3>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(pr.created_at).toLocaleDateString()}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <User className="h-3 w-3" />
+                            {pr.repository_url.split("/").slice(-2).join("/")}
+                          </div>
+                        </div>
+                        {pr.labels.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {pr.labels.slice(0, 3).map((label) => (
+                              <Badge
+                                key={label.name}
+                                variant="outline"
+                                className="text-xs"
+                                style={{
+                                  borderColor: `#${label.color}`,
+                                  color: `#${label.color}`,
+                                }}
+                              >
+                                {label.name}
+                              </Badge>
+                            ))}
+                            {pr.labels.length > 3 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{pr.labels.length - 3}
+                              </Badge>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      <h3 className="font-semibold group-hover:text-primary transition-colors truncate">
-                        {pr.title}
-                      </h3>
-                      <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(pr.created_at).toLocaleDateString()}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <User className="h-3 w-3" />
-                          {pr.repository_url.split("/").slice(-2).join("/")}
-                        </div>
-                      </div>
-                      {pr.labels.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {pr.labels.slice(0, 3).map((label) => (
-                            <Badge
-                              key={label.name}
-                              variant="outline"
-                              className="text-xs"
-                              style={{
-                                borderColor: `#${label.color}`,
-                                color: `#${label.color}`,
-                              }}
-                            >
-                              {label.name}
-                            </Badge>
-                          ))}
-                          {pr.labels.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{pr.labels.length - 3}
-                            </Badge>
-                          )}
-                        </div>
-                      )}
+                      <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
                     </div>
-                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
-                  </div>
-                </a>
-              ))}
+                  </a>
+                ))}
 
               {/* Load more section */}
               {data?.pagination.hasMore && (
