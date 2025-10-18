@@ -121,14 +121,31 @@
     }
   ],
   "achievements": [
-    { "label": "Alby Bug Bounty ", "value": "Got paid 75k Lightning Sats" },
+    {
+      "label": "Alby Bug Bounty ",
+      "value": "Got paid 75k Lightning Sats",
+      "link": "https://github.com/getAlby/bitcoin-connect/issues/182"
+    },
     {
       "label": "TON Hackathon Winner",
-      "value": "Got paid 250$ worth of TON coin"
+      "value": "Got paid 250$ worth of TON coin",
+      "link": "https://www.linkedin.com/posts/krrish-sehgal-5a268b24b_ton-web3-blockchain-activity-7385245567557414912-kJJW?utm_source=share&utm_medium=member_desktop"
     },
-    { "label": "Summer of Bitcoin 2025", "value": "Unchained Capital" },
-    { "label": "Google Summer of Code 2025", "value": "OWASP Foundation" },
-    { "label": "Smart India Hackathon Winner", "value": "2024" }
+    {
+      "label": "Summer of Bitcoin 2025",
+      "value": "Unchained Capital",
+      "link": "https://drive.google.com/file/d/1xnIuzun7nKWDpeQFRntd6AuoD6SougZY/view?usp=sharing"
+    },
+    {
+      "label": "Google Summer of Code 2025",
+      "value": "OWASP Foundation",
+      "link": "https://drive.google.com/file/d/1qgXdQJYFx-UXD0eC5d2bj2WVhf0IaQWR/view?usp=sharing"
+    },
+    {
+      "label": "Smart India Hackathon Winner",
+      "value": "2024",
+      "link": "https://www.linkedin.com/posts/krrish-sehgal-5a268b24b_sih2024-persistence-innovation-activity-7274058004285562880-GQyp?utm_source=share&utm_medium=member_desktop"
+    }
   ],
   "speaking": [],
   "writing": [
