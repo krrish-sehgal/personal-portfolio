@@ -50,6 +50,25 @@ type OssStats = {
 const fetcher = (url: string) =>
   fetch(url, { cache: "no-store" }).then((r) => r.json());
 
+// Main projects to show permanently (fixed list, not "top N")
+const MAIN_ORGS = [
+  "owasp-blt",
+  "caravan-bitcoin",
+  "getAlby",
+  "kubernetes-sigs",
+  "kubestellar",
+  "kgateway",
+] as const;
+
+function getCountForOrg(countsByOrg: Record<string, number>, org: string): number {
+  const exact = countsByOrg[org];
+  if (exact !== undefined) return exact;
+  const key = Object.keys(countsByOrg).find(
+    (k) => k.toLowerCase() === org.toLowerCase()
+  );
+  return key ? countsByOrg[key] : 0;
+}
+
 export default function OpenSourceDashboard({
   username,
 }: {
@@ -100,10 +119,10 @@ export default function OpenSourceDashboard({
     { type: "Other", value: countsByType.other, key: "other" },
   ].filter((d) => d.value > 0);
 
-  const orgData = Object.entries(data.countsByOrg)
-    .map(([org, count]) => ({ org, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10);
+  const orgData = MAIN_ORGS.map((org) => ({
+    org,
+    count: getCountForOrg(data.countsByOrg, org),
+  }));
 
   const monthly = data.monthlySeries;
 
@@ -153,18 +172,18 @@ export default function OpenSourceDashboard({
         </Card>
       </div>
 
-      {/* Top Organizations - Clickable Cards */}
+      {/* Main Projects - Fixed list, always shown */}
       <Card>
         <CardHeader>
-          <CardTitle>Top Organizations</CardTitle>
+          <CardTitle>Main Projects</CardTitle>
           <CardDescription>
-            Organizations where I contribute the most • Click to view detailed
+            Key organizations I contribute to • Click to view detailed
             contributions
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {orgData.slice(0, 6).map(({ org, count }) => (
+            {orgData.map(({ org, count }) => (
               <button
                 key={org}
                 onClick={() => handleOrgClick(org)}
@@ -252,19 +271,18 @@ export default function OpenSourceDashboard({
         </CardContent>
       </Card>
 
-      {/* PRs by Organization (Bar) */}
+      {/* PRs by Main Projects (Bar) */}
       <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            Contributions by Organization
+            Contributions by Main Projects
             <span className="flex items-center gap-1 text-xs text-muted-foreground">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               Live
             </span>
           </CardTitle>
           <CardDescription>
-            Top organizations (owners) by merged PRs • Click bars to view PRs on
-            GitHub
+            Merged PRs per main project • Click bars to view contributions
           </CardDescription>
         </CardHeader>
         <CardContent className="px-2 sm:px-6">
